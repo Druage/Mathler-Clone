@@ -43,21 +43,16 @@ describe("Game Logic", () => {
       );
     });
 
-    it.each`
-      test
-      ${playerSimulationTests[0]}
-      ${playerSimulationTests[1]}
-      ${playerSimulationTests[2]}
-      ${playerSimulationTests[3]}
-      ${playerSimulationTests[4]}
-    `("should check for a solution using $test.solution", ({ test }) => {
-      const { solution, expected } = test;
-      const { triesLeft, foundSolution } = game.checkSolution(solution);
-      expect(triesLeft).toEqual(expected.triesLeft);
-      expect(foundSolution).toEqual(expected.foundSolution);
-      expect(
-        game.getSolutionAt(game.getTries() - game.getTriesLeft() - 1)
-      ).toEqual(expected.solution);
+    playerSimulationTests.forEach((test) => {
+      it(`should check for a solution using ${test.solution.join("")}`, () => {
+        const { solution, expected } = test;
+        const { triesLeft, foundSolution } = game.checkSolution(solution);
+        expect(triesLeft).toEqual(expected.triesLeft);
+        expect(foundSolution).toEqual(expected.foundSolution);
+        expect(
+          game.getSolutionAt(game.getTries() - game.getTriesLeft() - 1)
+        ).toEqual(expected.solution);
+      });
     });
   });
 });
