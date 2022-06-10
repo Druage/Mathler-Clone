@@ -1,4 +1,5 @@
-import { CellStatus, Game, Solution } from "../../src/game/Game";
+import { Game, Solution } from "../../src/game/Game";
+import { playerSimulationTests } from "./contracts/playerSimulationTests";
 
 describe("Game Logic", () => {
   let game: Game;
@@ -6,7 +7,7 @@ describe("Game Logic", () => {
   const RESULT = 73;
   const TARGET_SOLUTION: Solution = ["1", "3", "2", "-", "5", "9"];
 
-  beforeEach(() => {
+  beforeAll(() => {
     game = new Game(RESULT, TARGET_SOLUTION);
     expect(game.getResult()).toEqual(RESULT);
     expect(game.getTargetSolution()).toEqual(TARGET_SOLUTION);
@@ -21,35 +22,42 @@ describe("Game Logic", () => {
     }
   });
 
-  it("should load the solution and flag the cells with the correct status", () => {
-    const { triesLeft, foundSolution } = game.checkSolution([
-      "1",
-      "2",
-      "0",
-      "-",
-      "4",
-      "7",
-    ]);
+  describe("[Player Simulation Tests]", () => {
+    it("should throw an error when the solution has a size less than the target", () => {
+      expect(() => game.checkSolution(["1", "2", "0", "-", "4"])).toThrow(
+        "LengthError: The solution provided must be the same length as solution you are trying to find"
+      );
+    });
 
-    expect(triesLeft).toEqual(5);
-    expect(foundSolution).toBeFalsy();
-    expect(game.getSolutionAt(0)).toEqual([
-      { val: "1", status: CellStatus.CORRECT },
-      { val: "2", status: CellStatus.CORRECT_WRONG_POSITION },
-      { val: "0", status: CellStatus.INCORRECT },
-      { val: "-", status: CellStatus.CORRECT },
-      { val: "4", status: CellStatus.INCORRECT },
-      { val: "7", status: CellStatus.INCORRECT },
-    ]);
-  });
+    it("should throw an error when the solution has a size greater than the target", () => {
+      expect(() =>
+        game.checkSolution(["1", "2", "0", "-", "4", "7", "1"])
+      ).toThrow(
+        "LengthError: The solution provided must be the same length as solution you are trying to find"
+      );
+    });
 
-  it("should throw an error when the solution has a size less than the target", () => {
-    expect(() => game.checkSolution(["1", "2", "0", "-", "4"])).toThrow(Error);
-  });
+    it("should throw an error when the solution does not add up to the result", () => {
+      expect(() => game.checkSolution(["1", "2", "0", "-", "4", "2"])).toThrow(
+        "ResultError: The solution provided does not equal the target result"
+      );
+    });
 
-  it("should throw an error when the solution has a size greater than the target", () => {
-    expect(() =>
-      game.checkSolution(["1", "2", "0", "-", "4", "7", "1"])
-    ).toThrow(Error);
+    it.each`
+      test
+      ${playerSimulationTests[0]}
+      ${playerSimulationTests[1]}
+      ${playerSimulationTests[2]}
+      ${playerSimulationTests[3]}
+      ${playerSimulationTests[4]}
+    `("should check for a solution using $test.solution", ({ test }) => {
+      const { solution, expected } = test;
+      const { triesLeft, foundSolution } = game.checkSolution(solution);
+      expect(triesLeft).toEqual(expected.triesLeft);
+      expect(foundSolution).toEqual(expected.foundSolution);
+      expect(
+        game.getSolutionAt(game.getTries() - game.getTriesLeft() - 1)
+      ).toEqual(expected.solution);
+    });
   });
 });

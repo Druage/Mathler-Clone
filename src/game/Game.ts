@@ -1,3 +1,5 @@
+import { evaluate } from "mathjs";
+
 type ArithmeticOps = "+" | "-" | "*" | "/";
 type NumberOps = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
 type GridOps = NumberOps | ArithmeticOps | null;
@@ -11,7 +13,7 @@ export enum CellStatus {
   UNKNOWN,
 }
 
-type Cell = { val: GridOps; status: CellStatus };
+export type Cell = { val: GridOps; status: CellStatus };
 
 export class Game {
   grid: Cell[][];
@@ -48,7 +50,13 @@ export class Game {
     foundSolution: boolean;
   } {
     if (solution.length === this.targetSolution.length) {
-      const index = this.triesLeft - this.triesLeft;
+      if (evaluate(solution.join("")) !== this.result) {
+        throw new Error(
+          "ResultError: The solution provided does not equal the target result"
+        );
+      }
+
+      const index = this.tries - this.triesLeft;
       const row = this.grid[index];
 
       let foundSolution = true;
@@ -78,7 +86,7 @@ export class Game {
     }
 
     throw new Error(
-      "The solution provided must be the same length as solution you are trying to find"
+      "LengthError: The solution provided must be the same length as solution you are trying to find"
     );
   }
 
@@ -88,4 +96,6 @@ export class Game {
 
   getResult = () => this.result;
   getTargetSolution = () => this.targetSolution;
+  getTries = () => this.tries;
+  getTriesLeft = () => this.triesLeft;
 }
