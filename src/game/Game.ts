@@ -98,4 +98,5 @@ export class Game {
   getTargetSolution = () => this.targetSolution;
   getTries = () => this.tries;
   getTriesLeft = () => this.triesLeft;
+  getGrid = () => this.grid;
 }
