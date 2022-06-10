@@ -57,6 +57,7 @@ export class MathlerEngine {
       }
 
       const index = this.tries - this.triesLeft;
+
       const row = this.grid[index];
 
       let foundSolution = true;
@@ -88,6 +89,16 @@ export class MathlerEngine {
     throw new Error(
       "LengthError: The solution provided must be the same length as solution you are trying to find"
     );
+  }
+
+  toString(): string {
+    let str = "";
+    this.grid.forEach((row) => {
+      str += row.map((cell) => (cell.val ? cell.val : "_")).join(" ");
+      str += "\n";
+    });
+
+    return str;
   }
 
   getSolutionAt(index: number): Cell[] {
