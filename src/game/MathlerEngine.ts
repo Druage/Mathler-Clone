@@ -15,7 +15,7 @@ export enum CellStatus {
 
 export type Cell = { val: GridOps; status: CellStatus };
 
-export class Game {
+export class MathlerEngine {
   grid: Cell[][];
 
   result: number | undefined;

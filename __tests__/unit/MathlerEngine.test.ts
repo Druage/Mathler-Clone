@@ -1,14 +1,14 @@
-import { Game, Solution } from "../../src/game/Game";
+import { MathlerEngine, Solution } from "../../src/game/MathlerEngine";
 import { playerSimulationTests } from "./contracts/playerSimulationTests";
 
-describe("Game Logic", () => {
-  let game: Game;
+describe("Engine Logic", () => {
+  let game: MathlerEngine;
 
   const RESULT = 73;
   const TARGET_SOLUTION: Solution = ["1", "3", "2", "-", "5", "9"];
 
   beforeAll(() => {
-    game = new Game(RESULT, TARGET_SOLUTION);
+    game = new MathlerEngine(RESULT, TARGET_SOLUTION);
     expect(game.getResult()).toEqual(RESULT);
     expect(game.getTargetSolution()).toEqual(TARGET_SOLUTION);
   });

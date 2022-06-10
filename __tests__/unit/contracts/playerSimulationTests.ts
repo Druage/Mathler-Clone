@@ -1,4 +1,4 @@
-import { Cell, CellStatus, Solution } from "../../../src/game/Game";
+import { Cell, CellStatus, Solution } from "../../../src/game/MathlerEngine";
 
 export interface PlayerSimulationTestContract {
   solution: Solution;

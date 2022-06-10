@@ -1,10 +1,10 @@
 import React from "react";
-import { Game, Solution } from "../game/Game";
+import { MathlerEngine, Solution } from "../game/MathlerEngine";
 
 export function Grid() {
   const resultNumber = 73;
   const targetSolution: Solution = ["1", "3", "2", "-", "5", "9"];
-  const game = new Game(resultNumber, targetSolution);
+  const game = new MathlerEngine(resultNumber, targetSolution);
 
   return (
     <div className={"flex flex-col gap-2"}>
