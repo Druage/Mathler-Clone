@@ -7,38 +7,44 @@ import {
 } from "../game/MathlerEngine";
 import clsx from "clsx";
 
-const MATHLER_ENGINE = new MathlerEngine();
-MATHLER_ENGINE.setTarget(73, ["1", "3", "2", "-", "5", "9"]);
-
 export function MathlerGrid() {
-  const [engineCells, setEngineCells] = useState<Cell[][]>(
-    MATHLER_ENGINE.getGrid
-  );
+  const [engine] = useState<MathlerEngine>(() => {
+    const engine = new MathlerEngine();
+    engine.setTarget(73, ["1", "3", "2", "-", "5", "9"]);
+    engine.onUpdate(onEngineUpdate);
+    return engine;
+  });
+
+  const [engineCells, setEngineCells] = useState<Cell[][]>(engine.getGrid);
   const [attemptsLeft, setAttemptsLeft] = useState<number>(
-    MATHLER_ENGINE.getTriesLeft()
+    engine.getTriesLeft()
   );
 
   const [gameWon, setGameWon] = useState<boolean>(false);
 
-  MATHLER_ENGINE.onUpdate((triesLeft, foundSolution, updatedGridCells) => {
-    console.log(MATHLER_ENGINE.toString());
+  function onEngineUpdate(
+    triesLeft: number,
+    foundSolution: boolean,
+    updatedGridCells: Cell[][]
+  ) {
+    console.log(engine.toString());
 
     setAttemptsLeft(triesLeft);
     setGameWon(foundSolution);
     setEngineCells(updatedGridCells);
-  });
+  }
 
   function checkSolution() {
     if (attemptsLeft > 0) {
-      const solution: Solution = engineCells[MATHLER_ENGINE.getTriesUsed()].map(
+      const solution: Solution = engineCells[engine.getTriesUsed()].map(
         (cell) => cell.val
       );
 
       try {
-        MATHLER_ENGINE.checkSolution(solution);
+        engine.checkSolution(solution);
       } catch (error: any) {
         console.log(error.message);
-        console.log(MATHLER_ENGINE.toString());
+        console.log(engine.toString());
       }
     } else {
       alert("YOU HAVE NO TRIES LEFT AND HAVE LOST!");
@@ -57,7 +63,7 @@ export function MathlerGrid() {
   }
 
   function reset() {
-    MATHLER_ENGINE.reset();
+    engine.reset();
   }
 
   return (
@@ -79,7 +85,6 @@ export function MathlerGrid() {
               key={cellIndex}
               value={cell.val === null ? "" : cell.val.toString()}
               onInput={(event: any) => {
-                console.log(event.target.value);
                 if (new RegExp("[\\d\\+\\-\\*\\/]").test(event.target.value)) {
                   const copy = [...engineCells];
                   copy[rowIndex][cellIndex] = {
