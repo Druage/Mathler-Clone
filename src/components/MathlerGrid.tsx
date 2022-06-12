@@ -66,6 +66,24 @@ export function MathlerGrid() {
     engine.reset();
   }
 
+  function updateEngineCell(
+    event: any,
+    rowIndex: number,
+    cellIndex: number,
+    cell: Cell
+  ) {
+    if (new RegExp("[\\d\\+\\-\\*\\/]").test(event.target.value)) {
+      const copy = [...engineCells];
+      copy[rowIndex][cellIndex] = {
+        ...cell,
+        val: event.target.value,
+      };
+      setEngineCells(copy);
+    } else {
+      event.preventDefault();
+    }
+  }
+
   return (
     <div className={"flex flex-col gap-2"}>
       {engineCells.map((row, rowIndex) => (
@@ -84,18 +102,9 @@ export function MathlerGrid() {
               maxLength={1}
               key={cellIndex}
               value={cell.val === null ? "" : cell.val.toString()}
-              onInput={(event: any) => {
-                if (new RegExp("[\\d\\+\\-\\*\\/]").test(event.target.value)) {
-                  const copy = [...engineCells];
-                  copy[rowIndex][cellIndex] = {
-                    ...cell,
-                    val: event.target.value,
-                  };
-                  setEngineCells(copy);
-                } else {
-                  event.preventDefault();
-                }
-              }}
+              onInput={(event) =>
+                updateEngineCell(event, rowIndex, cellIndex, cell)
+              }
               readOnly={cell.status !== CellStatus.UNKNOWN}
               onFocus={(event) => event.target.select()}
             />
