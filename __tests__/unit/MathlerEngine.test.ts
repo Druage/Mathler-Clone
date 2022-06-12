@@ -1,5 +1,9 @@
 import { MathlerEngine, Solution } from "../../src/game/MathlerEngine";
 import { playerSimulationTests } from "./contracts/playerSimulationTests";
+import {
+  ResultMathError,
+  SolutionLengthError,
+} from "../../src/game/exceptions/Exceptions";
 
 describe("Engine Logic", () => {
   let game: MathlerEngine;
@@ -26,21 +30,19 @@ describe("Engine Logic", () => {
   describe("[Player Simulation Tests]", () => {
     it("should throw an error when the solution has a size less than the target", () => {
       expect(() => game.checkSolution(["1", "2", "0", "-", "4"])).toThrow(
-        "LengthError: The solution provided must be the same length as solution you are trying to find"
+        SolutionLengthError
       );
     });
 
     it("should throw an error when the solution has a size greater than the target", () => {
       expect(() =>
         game.checkSolution(["1", "2", "0", "-", "4", "7", "1"])
-      ).toThrow(
-        "LengthError: The solution provided must be the same length as solution you are trying to find"
-      );
+      ).toThrow(SolutionLengthError);
     });
 
     it("should throw an error when the solution does not add up to the result", () => {
       expect(() => game.checkSolution(["1", "2", "0", "-", "4", "2"])).toThrow(
-        "ResultError: The solution provided does not equal the target result"
+        ResultMathError
       );
     });
 

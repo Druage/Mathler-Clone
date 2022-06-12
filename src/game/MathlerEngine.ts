@@ -1,4 +1,5 @@
 import { evaluate } from "mathjs";
+import { ResultMathError, SolutionLengthError } from "./exceptions/Exceptions";
 
 type ArithmeticOps = "+" | "-" | "*" | "/";
 type NumberOps = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
@@ -49,9 +50,7 @@ export class MathlerEngine {
   checkSolution(solution: Solution) {
     if (solution.length === this.targetSolution?.length) {
       if (evaluate(solution.join("")) !== this.result) {
-        throw new Error(
-          "ResultError: The solution provided does not equal the target result"
-        );
+        throw new ResultMathError();
       }
 
       const index = this.tries - this.triesLeft;
@@ -86,9 +85,7 @@ export class MathlerEngine {
         );
       }
     } else {
-      throw new Error(
-        "LengthError: The solution provided must be the same length as solution you are trying to find"
-      );
+      throw new SolutionLengthError();
     }
   }
 
