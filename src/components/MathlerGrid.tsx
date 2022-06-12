@@ -53,13 +53,13 @@ export function MathlerGrid() {
 
   function changeCellColorOnStatus(cell: Cell): string {
     if (cell.status === CellStatus.CORRECT) {
-      return "bg-green-500";
+      return "bg-emerald";
     } else if (cell.status === CellStatus.CORRECT_WRONG_POSITION) {
-      return "bg-yellow-500";
+      return "bg-sun-flower";
     } else if (cell.status === CellStatus.INCORRECT) {
-      return "bg-red-500";
+      return "bg-alizarin";
     }
-    return "";
+    return "bg-gray-100";
   }
 
   function reset() {
@@ -85,8 +85,8 @@ export function MathlerGrid() {
   }
 
   return (
-    <div className={"flex flex-col gap-2"}>
-      <div className={"mb-6 text-center text-xl"}>
+    <div>
+      <div className={"mb-6 mt-3 text-center text-xl text-white"}>
         <div>
           Try to find the equation that equals: <b>{engine.getResult()}</b>
         </div>
@@ -95,36 +95,38 @@ export function MathlerGrid() {
         </em>
       </div>
 
-      {engineCells.map((row, rowIndex) => (
-        <div
-          key={rowIndex}
-          className={"flex flex-row items-center justify-center gap-2"}
-        >
-          {row.map((cell, cellIndex) => (
-            <input
-              className={clsx(
-                "border-slate-500s h-11 w-11 rounded border-2 border-slate-400 text-center text-lg font-bold focus:outline-4 focus:outline-slate-800",
-                changeCellColorOnStatus(cell)
-              )}
-              autoFocus={rowIndex === 0 && cellIndex === 0}
-              type={"text"}
-              maxLength={1}
-              key={cellIndex}
-              value={cell.val === null ? "" : cell.val.toString()}
-              onInput={(event) =>
-                updateEngineCell(event, rowIndex, cellIndex, cell)
-              }
-              readOnly={cell.status !== CellStatus.UNKNOWN}
-              onFocus={(event) => event.target.select()}
-            />
-          ))}
-        </div>
-      ))}
+      <div className={"flex flex-col gap-2 rounded bg-midnight p-4"}>
+        {engineCells.map((row, rowIndex) => (
+          <div
+            key={rowIndex}
+            className={"flex flex-row items-center justify-center gap-2"}
+          >
+            {row.map((cell, cellIndex) => (
+              <input
+                className={clsx(
+                  "h-11 w-11 rounded text-center text-lg font-bold focus:outline focus:outline-4 focus:outline-amnethyst",
+                  changeCellColorOnStatus(cell)
+                )}
+                autoFocus={rowIndex === 0 && cellIndex === 0}
+                type={"text"}
+                maxLength={1}
+                key={cellIndex}
+                value={cell.val === null ? "" : cell.val.toString()}
+                onInput={(event) =>
+                  updateEngineCell(event, rowIndex, cellIndex, cell)
+                }
+                readOnly={cell.status !== CellStatus.UNKNOWN}
+                onFocus={(event) => event.target.select()}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
 
       <div className={"flex w-full gap-1"}>
         <button
           className={
-            "mt-4 flex-1 border border-slate-800 bg-blue-100 py-2 font-bold active:bg-blue-200"
+            "mt-4 w-1/3 border border-slate-800 bg-blue-100 py-2 font-bold active:bg-blue-200"
           }
           onClick={() => reset()}
         >
@@ -133,11 +135,11 @@ export function MathlerGrid() {
 
         <button
           className={
-            "mt-4 flex-1 border border-slate-800 bg-blue-400 py-2 font-bold active:bg-blue-500"
+            "mt-4 flex-1 rounded border-4 border-soft-amnethyst bg-amnethyst py-2 font-bold text-white shadow-xl active:bg-dark-amnethyst"
           }
           onClick={() => checkSolution()}
         >
-          Enter
+          Check Solution
         </button>
       </div>
     </div>
