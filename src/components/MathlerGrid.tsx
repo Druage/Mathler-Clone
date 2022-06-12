@@ -126,7 +126,7 @@ export function MathlerGrid() {
       <div className={"flex w-full gap-1"}>
         <button
           className={
-            "mt-4 w-1/3 border border-slate-800 bg-blue-100 py-2 font-bold active:bg-blue-200"
+            "mt-4 w-1/3 rounded border-4 border-white bg-gray-200 py-2 font-bold active:bg-gray-300"
           }
           onClick={() => reset()}
         >
