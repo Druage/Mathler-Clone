@@ -7,7 +7,10 @@ export default function Layout({ children }: PropsWithChildren<{}>) {
         "flex h-screen w-screen flex-col items-center justify-center bg-gray-100"
       }
     >
-      <h1 className={"mb-12 text-2xl font-medium"}>Mathler</h1>
+      <h1 className={"text-2xl font-medium"}>Mathler</h1>
+      <span className={"mb-6"}>
+        An equation guessing game for the Wordler at heart
+      </span>
       {children}
     </section>
   );

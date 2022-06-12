@@ -86,6 +86,15 @@ export function MathlerGrid() {
 
   return (
     <div className={"flex flex-col gap-2"}>
+      <div className={"mb-6 text-center text-xl"}>
+        <div>
+          Try to find the equation that equals: <b>{engine.getResult()}</b>
+        </div>
+        <em className={"text-sm"}>
+          You have {engine.getTries()} tries, Valid inputs are 0-9, +, -, *, /
+        </em>
+      </div>
+
       {engineCells.map((row, rowIndex) => (
         <div
           key={rowIndex}
@@ -94,7 +103,7 @@ export function MathlerGrid() {
           {row.map((cell, cellIndex) => (
             <input
               className={clsx(
-                "border-slate-500s h-12 w-12 rounded border-2 border-slate-400 text-center text-lg font-bold focus:outline-purple-400",
+                "border-slate-500s h-11 w-11 rounded border-2 border-slate-400 text-center text-lg font-bold focus:outline-4 focus:outline-slate-800",
                 changeCellColorOnStatus(cell)
               )}
               autoFocus={rowIndex === 0 && cellIndex === 0}
@@ -112,23 +121,25 @@ export function MathlerGrid() {
         </div>
       ))}
 
-      <button
-        className={
-          "mt-4 border border-slate-800 bg-blue-100 py-2 font-bold active:bg-blue-200"
-        }
-        onClick={() => reset()}
-      >
-        Reset
-      </button>
+      <div className={"flex w-full gap-1"}>
+        <button
+          className={
+            "mt-4 flex-1 border border-slate-800 bg-blue-100 py-2 font-bold active:bg-blue-200"
+          }
+          onClick={() => reset()}
+        >
+          Reset
+        </button>
 
-      <button
-        className={
-          "mt-4 border border-slate-800 bg-blue-400 py-2 font-bold active:bg-blue-500"
-        }
-        onClick={() => checkSolution()}
-      >
-        Enter
-      </button>
+        <button
+          className={
+            "mt-4 flex-1 border border-slate-800 bg-blue-400 py-2 font-bold active:bg-blue-500"
+          }
+          onClick={() => checkSolution()}
+        >
+          Enter
+        </button>
+      </div>
     </div>
   );
 }
