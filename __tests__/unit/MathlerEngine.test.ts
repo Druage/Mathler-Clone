@@ -8,7 +8,8 @@ describe("Engine Logic", () => {
   const TARGET_SOLUTION: Solution = ["1", "3", "2", "-", "5", "9"];
 
   beforeAll(() => {
-    game = new MathlerEngine(RESULT, TARGET_SOLUTION);
+    game = new MathlerEngine();
+    game.setTarget(RESULT, TARGET_SOLUTION);
     expect(game.getResult()).toEqual(RESULT);
     expect(game.getTargetSolution()).toEqual(TARGET_SOLUTION);
   });
@@ -46,12 +47,14 @@ describe("Engine Logic", () => {
     playerSimulationTests.forEach((test) => {
       it(`should check for a solution using ${test.solution.join("")}`, () => {
         const { solution, expected } = test;
-        const { triesLeft, foundSolution } = game.checkSolution(solution);
-        expect(triesLeft).toEqual(expected.triesLeft);
-        expect(foundSolution).toEqual(expected.foundSolution);
-        expect(
-          game.getSolutionAt(game.getTries() - game.getTriesLeft() - 1)
-        ).toEqual(expected.solution);
+        game.onUpdate((triesLeft, foundSolution, updatedGridCells) => {
+          expect(triesLeft).toEqual(expected.triesLeft);
+          expect(foundSolution).toEqual(expected.foundSolution);
+          expect(
+            game.getSolutionAt(game.getTries() - game.getTriesLeft() - 1)
+          ).toEqual(expected.solution);
+        });
+        game.checkSolution(solution);
       });
     });
   });

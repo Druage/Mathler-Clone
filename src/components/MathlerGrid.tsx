@@ -7,9 +7,8 @@ import {
 } from "../game/MathlerEngine";
 import clsx from "clsx";
 
-const RESULT_NUMBER = 73;
-const TARGET_SOLUTION: Solution = ["1", "3", "2", "-", "5", "9"];
-const MATHLER_ENGINE = new MathlerEngine(RESULT_NUMBER, TARGET_SOLUTION);
+const MATHLER_ENGINE = new MathlerEngine();
+MATHLER_ENGINE.setTarget(73, ["1", "3", "2", "-", "5", "9"]);
 
 export function MathlerGrid() {
   const [engineCells, setEngineCells] = useState<Cell[][]>(
@@ -18,26 +17,29 @@ export function MathlerGrid() {
   const [attemptsLeft, setAttemptsLeft] = useState<number>(
     MATHLER_ENGINE.getTriesLeft()
   );
+
   const [gameWon, setGameWon] = useState<boolean>(false);
+
+  MATHLER_ENGINE.onUpdate((triesLeft, foundSolution, updatedGridCells) => {
+    console.log(MATHLER_ENGINE.toString());
+
+    setAttemptsLeft(triesLeft);
+    setGameWon(foundSolution);
+    setEngineCells(updatedGridCells);
+  });
 
   function checkSolution() {
     if (attemptsLeft > 0) {
-      const solution: Solution = engineCells[
-        MATHLER_ENGINE.getTries() - attemptsLeft
-      ].map((cell) => cell.val);
-
-      const { triesLeft, foundSolution } =
-        MATHLER_ENGINE.checkSolution(solution);
-
-      console.log(MATHLER_ENGINE.toString());
-
-      setAttemptsLeft(triesLeft);
-      setGameWon(foundSolution);
-      setEngineCells(
-        MATHLER_ENGINE.getGrid().map(function (cells) {
-          return cells.slice();
-        })
+      const solution: Solution = engineCells[MATHLER_ENGINE.getTriesUsed()].map(
+        (cell) => cell.val
       );
+
+      try {
+        MATHLER_ENGINE.checkSolution(solution);
+      } catch (error: any) {
+        console.log(error.message);
+        console.log(MATHLER_ENGINE.toString());
+      }
     } else {
       alert("YOU HAVE NO TRIES LEFT AND HAVE LOST!");
     }
@@ -52,6 +54,10 @@ export function MathlerGrid() {
       return "bg-red-500";
     }
     return "";
+  }
+
+  function reset() {
+    MATHLER_ENGINE.reset();
   }
 
   return (
@@ -70,21 +76,36 @@ export function MathlerGrid() {
               autoFocus={rowIndex === 0 && cellIndex === 0}
               type={"text"}
               maxLength={1}
-              pattern={"[\\d\\(\\)\\+\\-\\*\\/\\.]{1}"}
               key={cellIndex}
-              value={cell.val?.toString()}
+              value={cell.val === null ? "" : cell.val.toString()}
               onInput={(event: any) => {
-                const copy = [...engineCells];
-                copy[rowIndex][cellIndex] = {
-                  ...cell,
-                  val: event.target.value,
-                };
-                setEngineCells(copy);
+                console.log(event.target.value);
+                if (new RegExp("[\\d\\+\\-\\*\\/]").test(event.target.value)) {
+                  const copy = [...engineCells];
+                  copy[rowIndex][cellIndex] = {
+                    ...cell,
+                    val: event.target.value,
+                  };
+                  setEngineCells(copy);
+                } else {
+                  event.preventDefault();
+                }
               }}
+              readOnly={cell.status !== CellStatus.UNKNOWN}
+              onFocus={(event) => event.target.select()}
             />
           ))}
         </div>
       ))}
+
+      <button
+        className={
+          "mt-4 border border-slate-800 bg-blue-100 py-2 font-bold active:bg-blue-200"
+        }
+        onClick={() => reset()}
+      >
+        Reset
+      </button>
 
       <button
         className={
