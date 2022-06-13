@@ -118,6 +118,7 @@ export function MathlerGrid() {
           >
             {row.map((cell, cellIndex) => (
               <input
+                data-testid={"input-cell"}
                 className={clsx(
                   "h-11 w-11 rounded text-center text-lg font-bold focus:outline focus:outline-4 focus:outline-amnethyst",
                   changeCellColorOnStatus(cell)

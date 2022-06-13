@@ -73,7 +73,7 @@ export const playerSimulationTests: PlayerSimulationTestContract[] = [
   {
     solution: ["1", "3", "2", "-", "5", "9"],
     expected: {
-      triesLeft: 0,
+      triesLeft: 1,
       foundSolution: true,
       solution: [
         { val: "1", status: CellStatus.CORRECT },
