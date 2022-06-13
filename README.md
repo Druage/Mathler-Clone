@@ -37,3 +37,5 @@ Initially I was not familiar with the rules of Mathler but I have obtained a ful
 
 ![Fresh Screenshot](/screenshots/screenshot-fresh.png)
 ![Win Screen Screenshot](/screenshots/screenshot-win-screen.png)
+![Loss Screen Screenshot](/screenshots/screenshot-loss-screen.png)
+![Alert Bubble Screenshot](/screenshots/screenshot-alert-bubble.png)
