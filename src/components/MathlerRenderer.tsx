@@ -11,7 +11,7 @@ import {
   SolutionLengthError,
 } from "../game/exceptions/Exceptions";
 
-export function MathlerGrid() {
+export function MathlerRenderer() {
   const [engine] = useState<MathlerEngine>(() => {
     const engine = new MathlerEngine();
     engine.setTarget(73, ["1", "3", "2", "-", "5", "9"]);

@@ -1,12 +1,12 @@
 import React from "react";
 import Layout from "../components/layout/Layout";
-import { MathlerGrid } from "../components/MathlerGrid";
+import { MathlerRenderer } from "../components/MathlerRenderer";
 
 function App() {
   return (
     <div className="App">
       <Layout>
-        <MathlerGrid />
+        <MathlerRenderer />
       </Layout>
     </div>
   );
