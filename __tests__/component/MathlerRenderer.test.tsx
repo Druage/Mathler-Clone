@@ -124,4 +124,30 @@ describe("<MathlerRenderer />", () => {
       expect(cell).toHaveValue("");
     });
   });
+
+  it("should be able to click the check solution button with valid inputs and see the background color on the inputs change", async () => {
+    const user = userEvent.setup();
+
+    render(<MathlerRenderer target={target} />);
+
+    const inputCells = screen.getAllByTestId("input-cell");
+
+    await user.type(inputCells[0], "1");
+    await user.type(inputCells[1], "2");
+    await user.type(inputCells[2], "0");
+    await user.type(inputCells[3], "-");
+    await user.type(inputCells[4], "4");
+    await user.type(inputCells[5], "7");
+
+    const checkSolutionButton = screen.getByTestId("check-solution-button");
+
+    await user.click(checkSolutionButton);
+
+    expect(inputCells[0]).toHaveClass("bg-emerald");
+    expect(inputCells[1]).toHaveClass("bg-sun-flower");
+    expect(inputCells[2]).toHaveClass("bg-alizarin");
+    expect(inputCells[3]).toHaveClass("bg-emerald");
+    expect(inputCells[4]).toHaveClass("bg-alizarin");
+    expect(inputCells[5]).toHaveClass("bg-alizarin");
+  });
 });
