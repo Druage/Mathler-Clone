@@ -8,15 +8,14 @@
 - Prettier
 - TailwindCSS
 - HeadlessUI
+- Cypress
 
 ## Personal Requirements
 
 1. Mobile & Desktop platforms supported
-2. WAI-ARIA compliant
-3. Nice UI / UX
-4. Dark Mode
-5. Temporary Hosting
-6. Fast!
+2. Nice UI / UX
+3. Dark Mode
+4. Fast!
 
 ## Game Rules
 
@@ -30,6 +29,11 @@ Initially I was not familiar with the rules of Mathler but I have obtained a ful
 6. An incorrect entry turns gray / red
 7. Digits and operations can be used more than once
 
-# Things to works towards in future
+## Installation
 
-1. Unit testing the components more using react-testing-library
+- npm install -f (This is needed because not all libraries being used are upgraded for React v18.0)
+
+## Screenshots
+
+![Fresh Screenshot](/screenshots/screenshot-fresh.png)
+![Win Screen Screenshot](/screenshots/screenshot-win-screen.png)
