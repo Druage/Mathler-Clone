@@ -16,7 +16,13 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "./",
-    "types": ["cypress", "node", "@testing-library/cypress"]
+    "types": [
+      "cypress",
+      "node",
+      "@testing-library/cypress",
+      "testing-library/jest-dom",
+      "jest"
+    ]
   },
   "include": ["src"]
 }

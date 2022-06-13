@@ -7,6 +7,7 @@ import {
 } from "../game/MathlerEngine";
 import clsx from "clsx";
 import { useStore } from "../store/store";
+import { RulesExplanation } from "./RulesExplanation";
 
 export function MathlerRenderer() {
   const [engine] = useState<MathlerEngine>(() => {
@@ -96,14 +97,7 @@ export function MathlerRenderer() {
 
   return (
     <div>
-      <div className={"mb-6 mt-3 text-center text-xl text-white"}>
-        <div>
-          Try to find the equation that equals: <b>{engine.getResult()}</b>
-        </div>
-        <em className={"text-sm"}>
-          You have {engine.getTries()} tries, Valid inputs are 0-9, +, -, *, /
-        </em>
-      </div>
+      <RulesExplanation engine={engine} />
 
       <div className={"flex flex-col gap-2 rounded bg-midnight p-4"}>
         {engineCells.map((row, rowIndex) => (

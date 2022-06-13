@@ -60,6 +60,7 @@
     "babel-jest": "^28.1.1",
     "cypress": "^10.1.0",
     "jest": "^28.1.1",
+    "jest-environment-jsdom": "^28.1.1",
     "postcss": "^8.4.14",
     "pre-push": "^0.1.2",
     "prettier": "^2.6.2",
