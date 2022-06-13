@@ -6,6 +6,10 @@ import {
   Solution,
 } from "../game/MathlerEngine";
 import clsx from "clsx";
+import {
+  ResultMathError,
+  SolutionLengthError,
+} from "../game/exceptions/Exceptions";
 
 export function MathlerGrid() {
   const [engine] = useState<MathlerEngine>(() => {
@@ -43,8 +47,12 @@ export function MathlerGrid() {
       try {
         engine.checkSolution(solution);
       } catch (error: any) {
+        if (error instanceof SolutionLengthError) {
+          alert(error.message);
+        } else if (error instanceof ResultMathError) {
+          alert(error.message);
+        }
         console.log(error.message);
-        console.log(engine.toString());
       }
     } else {
       alert("YOU HAVE NO TRIES LEFT AND HAVE LOST!");
