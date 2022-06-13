@@ -9,10 +9,16 @@ import clsx from "clsx";
 import { useStore } from "../store/store";
 import { RulesExplanation } from "./RulesExplanation";
 
-export function MathlerRenderer() {
+interface Props {
+  target?: { result: number; solution: Solution };
+}
+
+export function MathlerRenderer({
+  target = { result: 73, solution: ["1", "3", "2", "-", "5", "9"] },
+}: Props) {
   const [engine] = useState<MathlerEngine>(() => {
     const engine = new MathlerEngine();
-    engine.setTarget(73, ["1", "3", "2", "-", "5", "9"]);
+    engine.setTarget(target.result, target.solution);
     engine.onUpdate(onEngineUpdate);
     return engine;
   });
