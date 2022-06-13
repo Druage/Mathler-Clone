@@ -63,4 +63,25 @@ describe("E2E Tests", () => {
     cy.findByTestId("close-action-dialog-button").click();
     cy.findByTestId("action-dialog").should("not.exist");
   });
+
+  it("should show the alert notification if a user inputs an invalid solution", () => {
+    const invalidSolution = ["+", "2", "0", "-", "4", "7"];
+
+    for (let i = 0; i < invalidSolution.length; ++i) {
+      cy.findAllByTestId("input-cell")
+        .eq(i)
+        .type(invalidSolution[i])
+        .should("have.value", invalidSolution[i]);
+    }
+    cy.findByTestId("check-solution-button").click();
+
+    cy.findByTestId("alert-bubble");
+    cy.findByText("Error");
+    cy.findByText(
+      "ResultMathError: The solution provided does not equal the target result"
+    );
+
+    cy.findByTestId("close-alert-bubble-button").click();
+    cy.findByTestId("alert-bubble").should("not.exist");
+  });
 });
