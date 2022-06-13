@@ -36,7 +36,7 @@ export class MathlerEngine {
     this.grid = [];
 
     this.tries = 6;
-    this.triesLeft = 6;
+    this.triesLeft = this.tries;
 
     this.reset();
   }
@@ -49,6 +49,7 @@ export class MathlerEngine {
   // return triesLeft, and the result of the index states, CORRECT, CORRECT_WRONG_POSITION, INCORRECT
   checkSolution(solution: Solution) {
     if (solution.length === this.targetSolution?.length) {
+      console.log(solution.join(""));
       if (evaluate(solution.join("")) !== this.result) {
         throw new ResultMathError();
       }
@@ -79,7 +80,7 @@ export class MathlerEngine {
 
       if (this.updateCallback) {
         this.updateCallback(
-          foundSolution ? 0 : this.triesLeft,
+          this.triesLeft,
           foundSolution,
           this.grid.map((cells) => cells.slice())
         );

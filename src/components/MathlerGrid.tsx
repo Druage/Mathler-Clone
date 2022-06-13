@@ -36,6 +36,12 @@ export function MathlerGrid() {
     setAttemptsLeft(triesLeft);
     setGameWon(foundSolution);
     setEngineCells(updatedGridCells);
+
+    if (triesLeft === 0) {
+      alert("YOU HAVE NO TRIES LEFT AND HAVE LOST!");
+    } else if (foundSolution) {
+      alert("Congrats! You found the correct solution. You won!");
+    }
   }
 
   function checkSolution() {
@@ -52,6 +58,7 @@ export function MathlerGrid() {
         } else if (error instanceof ResultMathError) {
           alert(error.message);
         }
+        console.log(engine.toString());
         console.log(error.message);
       }
     } else {
