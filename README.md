@@ -27,5 +27,9 @@ Initially I was not familiar with the rules of Mathler but I have obtained a ful
 3. The equations follow the PEDMAS rule, which means you do them in the order of parentheses, exponentials, division, multiplication, addition and then subtraction.
 4. A correct entry turns green
 5. A correct entry in the wrong place turns yellow
-6. An incorrect entry turns gray
+6. An incorrect entry turns gray / red
 7. Digits and operations can be used more than once
+
+# Things to works towards in future
+
+1. Unit testing the components more using react-testing-library

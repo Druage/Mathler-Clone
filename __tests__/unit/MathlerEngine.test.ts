@@ -1,9 +1,14 @@
-import { MathlerEngine, Solution } from "../../src/game/MathlerEngine";
+import {
+  CellStatus,
+  MathlerEngine,
+  Solution,
+} from "../../src/game/MathlerEngine";
 import { playerSimulationTests } from "./contracts/playerSimulationTests";
 import {
   ResultMathError,
   SolutionLengthError,
 } from "../../src/game/exceptions/Exceptions";
+import { expect, beforeAll } from "@jest/globals";
 
 describe("Engine Logic", () => {
   let game: MathlerEngine;
@@ -19,7 +24,7 @@ describe("Engine Logic", () => {
   });
 
   it("should create a Mather [6x6] grid with the initial states being empty", () => {
-    expect(game.grid.length).toEqual(6);
+    expect(game.getGrid().length).toEqual(6);
 
     for (let i = 0; i < 6; ++i) {
       const row = game.getSolutionAt(i);
@@ -55,9 +60,32 @@ describe("Engine Logic", () => {
           expect(
             game.getSolutionAt(game.getTries() - game.getTriesLeft() - 1)
           ).toEqual(expected.solution);
+
+          game.onUpdate(undefined);
         });
         game.checkSolution(solution);
       });
+    });
+
+    it("should clear the grid and reset variables when calling reset", () => {
+      const { solution, expected } = playerSimulationTests[0];
+      game.checkSolution(solution);
+      expect(game.getSolutionAt(0)).toEqual(expected.solution);
+      expect(game.getTries()).toEqual(6);
+
+      game.reset();
+
+      const grid = game.getGrid();
+      expect(grid.length).toEqual(6);
+      grid.forEach((row) => {
+        expect(row.length).toEqual(6);
+        row.forEach((cell) => {
+          expect(cell).toEqual({ val: null, status: CellStatus.UNKNOWN });
+        });
+      });
+      expect(game.getTries()).toEqual(6);
+      expect(game.getTriesLeft()).toEqual(6);
+      expect(game.getTriesUsed()).toEqual(0);
     });
   });
 });

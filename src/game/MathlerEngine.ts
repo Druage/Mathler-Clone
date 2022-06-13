@@ -49,7 +49,6 @@ export class MathlerEngine {
   // return triesLeft, and the result of the index states, CORRECT, CORRECT_WRONG_POSITION, INCORRECT
   checkSolution(solution: Solution) {
     if (solution.length === this.targetSolution?.length) {
-      console.log(solution.join(""));
       if (evaluate(solution.join("")) !== this.result) {
         throw new ResultMathError();
       }
@@ -100,7 +99,7 @@ export class MathlerEngine {
     return str;
   }
 
-  onUpdate(cb: UpdateCallback) {
+  onUpdate(cb: UpdateCallback | undefined) {
     this.updateCallback = cb;
   }
 
