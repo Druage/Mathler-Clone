@@ -106,4 +106,22 @@ describe("<MathlerRenderer />", () => {
       expect(inputCells[0]).toHaveValue("");
     }
   );
+
+  it("should be able to click the reset button and clear the grid", async () => {
+    const user = userEvent.setup();
+
+    render(<MathlerRenderer target={target} />);
+
+    const inputCells = screen.getAllByTestId("input-cell");
+
+    await user.type(inputCells[0], "1");
+
+    const resetStateButton = screen.getByTestId("reset-state-button");
+
+    await user.click(resetStateButton);
+
+    inputCells.forEach((cell) => {
+      expect(cell).toHaveValue("");
+    });
+  });
 });

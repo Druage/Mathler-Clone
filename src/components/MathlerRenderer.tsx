@@ -136,6 +136,7 @@ export function MathlerRenderer({
 
       <div className={"flex w-full gap-1"}>
         <button
+          data-testid={"reset-state-button"}
           className={
             "mt-4 w-1/3 rounded border-4 border-white bg-gray-200 py-2 font-bold active:bg-gray-300"
           }
@@ -145,6 +146,7 @@ export function MathlerRenderer({
         </button>
 
         <button
+          data-testid={"check-solution-button"}
           className={
             "mt-4 flex-1 rounded border-4 border-soft-amnethyst bg-amnethyst py-2 font-bold text-white shadow-xl active:bg-dark-amnethyst"
           }
