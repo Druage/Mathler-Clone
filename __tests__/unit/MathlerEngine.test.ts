@@ -51,15 +51,21 @@ describe("Engine Logic", () => {
       );
     });
 
+    it("should throw an error when the solution is composed of only operations", () => {
+      expect(() => game.checkSolution(["+", "-", "/", "*", "-", "+"])).toThrow(
+        ResultMathError
+      );
+    });
+
     playerSimulationTests.forEach((test) => {
       it(`should check for a solution using ${test.solution.join("")}`, () => {
         const { solution, expected } = test;
         game.onUpdate((triesLeft, foundSolution, updatedGridCells) => {
           expect(triesLeft).toEqual(expected.triesLeft);
           expect(foundSolution).toEqual(expected.foundSolution);
-          expect(
-            game.getSolutionAt(game.getTries() - game.getTriesLeft() - 1)
-          ).toEqual(expected.solution);
+          expect(updatedGridCells[game.getTriesUsed() - 1]).toEqual(
+            expected.solution
+          );
 
           game.onUpdate(undefined);
         });

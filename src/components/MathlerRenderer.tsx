@@ -6,10 +6,7 @@ import {
   Solution,
 } from "../game/MathlerEngine";
 import clsx from "clsx";
-import {
-  ResultMathError,
-  SolutionLengthError,
-} from "../game/exceptions/Exceptions";
+import { useStore } from "../store/store";
 
 export function MathlerRenderer() {
   const [engine] = useState<MathlerEngine>(() => {
@@ -19,28 +16,31 @@ export function MathlerRenderer() {
     return engine;
   });
 
-  const [engineCells, setEngineCells] = useState<Cell[][]>(engine.getGrid);
+  const [engineCells, setEngineCells] = useState<Cell[][]>(engine.getGrid());
   const [attemptsLeft, setAttemptsLeft] = useState<number>(
     engine.getTriesLeft()
   );
 
   const [gameWon, setGameWon] = useState<boolean>(false);
 
+  const [openActionDialog, openAlert] = useStore((state) => [
+    state.openActionDialog,
+    state.openAlert,
+  ]);
+
   function onEngineUpdate(
     triesLeft: number,
     foundSolution: boolean,
     updatedGridCells: Cell[][]
   ) {
-    console.log(engine.toString());
-
     setAttemptsLeft(triesLeft);
     setGameWon(foundSolution);
     setEngineCells(updatedGridCells);
 
-    if (triesLeft === 0) {
-      alert("YOU HAVE NO TRIES LEFT AND HAVE LOST!");
+    if (!foundSolution && triesLeft === 0) {
+      openActionDialog("loss");
     } else if (foundSolution) {
-      alert("Congrats! You found the correct solution. You won!");
+      openActionDialog("win");
     }
   }
 
@@ -53,16 +53,10 @@ export function MathlerRenderer() {
       try {
         engine.checkSolution(solution);
       } catch (error: any) {
-        if (error instanceof SolutionLengthError) {
-          alert(error.message);
-        } else if (error instanceof ResultMathError) {
-          alert(error.message);
-        }
-        console.log(engine.toString());
-        console.log(error.message);
+        openAlert(error.message);
       }
     } else {
-      alert("YOU HAVE NO TRIES LEFT AND HAVE LOST!");
+      openActionDialog("loss");
     }
   }
 
@@ -79,6 +73,7 @@ export function MathlerRenderer() {
 
   function reset() {
     engine.reset();
+    setGameWon(false);
   }
 
   function updateEngineCell(
@@ -131,7 +126,7 @@ export function MathlerRenderer() {
                 onInput={(event) =>
                   updateEngineCell(event, rowIndex, cellIndex, cell)
                 }
-                readOnly={cell.status !== CellStatus.UNKNOWN}
+                readOnly={cell.status !== CellStatus.UNKNOWN || gameWon}
                 onFocus={(event) => event.target.select()}
               />
             ))}

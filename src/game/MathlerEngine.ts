@@ -46,10 +46,16 @@ export class MathlerEngine {
     this.targetSolution = solution;
   }
 
-  // return triesLeft, and the result of the index states, CORRECT, CORRECT_WRONG_POSITION, INCORRECT
   checkSolution(solution: Solution) {
     if (solution.length === this.targetSolution?.length) {
-      if (evaluate(solution.join("")) !== this.result) {
+      let evaluation;
+      try {
+        evaluation = evaluate(solution.join(""));
+      } catch (error: any) {
+        throw new ResultMathError();
+      }
+
+      if (evaluation !== this.result) {
         throw new ResultMathError();
       }
 
