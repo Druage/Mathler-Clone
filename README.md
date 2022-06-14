@@ -1,5 +1,7 @@
 # Mathler Clone
 
+![Fresh Screenshot](/screenshots/screenshot-fresh.png)
+
 ### Language / Technologies Chosen
 
 - npm
@@ -52,9 +54,8 @@ The E2E tests require the website to be running
 - npm run test
 - npm run test:e2e
 
-## Screenshots
+## Additional Screenshots
 
-![Fresh Screenshot](/screenshots/screenshot-fresh.png)
 ![Win Screen Screenshot](/screenshots/screenshot-win-screen.png)
 ![Loss Screen Screenshot](/screenshots/screenshot-loss-screen.png)
 ![Alert Bubble Screenshot](/screenshots/screenshot-alert-bubble.png)
