@@ -1,4 +1,6 @@
-# Mathler Clone
+# Super Mathler
+
+The next generation of Mathler!
 
 ![Fresh Screenshot](/screenshots/screenshot-fresh.png)
 
