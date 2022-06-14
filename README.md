@@ -39,6 +39,17 @@ Initially I was not familiar with the rules of Mathler but I have obtained a ful
 
 - npm install -f (This is needed because not all libraries being used are upgraded for React v18.0)
 
+## Run
+
+- npm run start
+
+## Running E2E Tests
+
+The E2E tests require the website to be running
+
+- npm run test
+- npm run test:e2e
+
 ## Screenshots
 
 ![Fresh Screenshot](/screenshots/screenshot-fresh.png)
