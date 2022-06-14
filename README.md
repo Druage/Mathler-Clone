@@ -17,6 +17,12 @@
 3. Dark Mode
 4. Fast!
 
+## Testing Strategy
+
+1. Unit test the game engine using Jest
+2. Component unit test React components using Jest and react-testing-library
+3. Test more complex global state interactions using E2E tests with Cypress
+
 ## Game Rules
 
 Initially I was not familiar with the rules of Mathler but I have obtained a full list from https://www.tomsguide.com/news/what-is-mathler-and-how-to-play, which are pasted below.
