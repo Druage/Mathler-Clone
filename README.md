@@ -41,6 +41,8 @@ Initially I was not familiar with the rules of Mathler but I have obtained a ful
 
 ## Run
 
+The game is currently defaulting to have an answer of 73 and target result of 132 - 59. The value can be changed from the code but would ideally be set by some external service that changes those values daily.
+
 - npm run start
 
 ## Running E2E Tests
