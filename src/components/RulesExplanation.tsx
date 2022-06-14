@@ -7,7 +7,7 @@ interface Props {
 
 export function RulesExplanation({ engine }: Props) {
   return (
-    <div className={"mb-6 mt-3 text-center text-xl text-white"}>
+    <div className={"text-center text-xl text-white"}>
       <div data-testid={"rules-explanation-heading"}>
         Try to find the equation that equals: <b>{engine.getResult()}</b>
       </div>

@@ -8,6 +8,7 @@ import {
 import clsx from "clsx";
 import { useStore } from "../store/store";
 import { RulesExplanation } from "./RulesExplanation";
+import { ColorCodeKey } from "./ColorCodeKey";
 
 interface Props {
   target?: { result: number; solution: Solution };
@@ -102,8 +103,10 @@ export function MathlerRenderer({
   }
 
   return (
-    <div>
+    <div className={"mt-3 flex flex-col gap-4 "}>
       <RulesExplanation engine={engine} />
+
+      <ColorCodeKey />
 
       <div className={"flex flex-col gap-2 rounded bg-midnight p-4"}>
         {engineCells.map((row, rowIndex) => (
